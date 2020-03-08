@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubenetes101
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+        app: kubenetes101
+  template: 
+    metadata: 
+      labels:
+        app: kubenetes101
+    spec:
+      containers:
+       - name: apigateway
+         imagePullPolicy: Always
+         image: banphlet/kubenetes101
+         ports:
+          - containerPort: 4000
+         command: 
+             - node
+             - index.js
+         env:
+           - name: PORT
+             value: "4000"
+         envFrom:
+           - secretRef:
+              name: appenv
+          #  - secretRef:
+          #      name: appenv
+         resources:
+             limits:
+               memory: "100Mi" 
+               cpu: "60m"
+       - name: worker
+         imagePullPolicy: Always
+         image: banphlet/kubenetes101
+         ports:
+          - containerPort: 4001
+         command: 
+             - node
+             - worker.js
+         env:
+           - name: PORT
+             value: "4001"
+         envFrom:
+            - secretRef:
+                name: appenv
+         resources:
+             limits:
+               memory: "100Mi" 
+               cpu: "60m"

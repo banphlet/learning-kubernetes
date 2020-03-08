@@ -1,0 +1,15 @@
+
+# -- Services
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubenetes101
+spec:
+  type: NodePort
+  selector:
+    app: kubenetes101
+  ports:
+  - protocol: TCP
+    port: 4000
+    nodePort: 30031

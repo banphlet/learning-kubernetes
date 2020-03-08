@@ -1,0 +1,20 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: testcron
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cron
+            image: banphlet/kubenetes101
+            command:
+            - node
+            - cron.js
+            envFrom:
+              - secretRef:
+                  name: appenv
+          restartPolicy: OnFailure
