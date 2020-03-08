@@ -2,7 +2,7 @@
 var http = require('http');
 
 console.log(new Date(), "welcome", process.env.PORT)
-console.log(process.env.HELLO)
+console.log(process.env)
 var handleRequest = function(request, response) {
   console.log('Received request for URL: ' + request.url);
   response.writeHead(200);
